@@ -30,19 +30,34 @@ data = pd.concat(dataframes, axis=0)
 sorted_data = data.sort_values("file")
 sorted_data.to_csv(f'{dest}/merged_results.csv')
 
-# plot dotplot
-print(list(sorted_data))
-print(sorted_data.head())
-sorted_data = sorted_data[["file","T cell","T cell CD4", "subject"]]
+# print(list(sorted_data))
+# print(sorted_data.head())
 sns.set_theme()
 
 hue_order = sorted_data['file'].to_list()
 subject_hue_order = sorted_data['subject'].to_list()
+
 df_melt = pd.melt(sorted_data, id_vars=['file', 'subject'], var_name='cell_type', value_name='cell_distribution')
 print(df_melt)
-sns.relplot(data=df_melt, x="cell_type", y="cell_distribution", hue="file", kind="scatter", hue_order=hue_order).savefig(f'{dest}/raw_scatter.png')
+tcell_sorted_data = sorted_data[["file","T cell","T cell CD4", "subject"]]
+df_melt_tcell = pd.melt(tcell_sorted_data, id_vars=['file', 'subject'], var_name='cell_type', value_name='cell_distribution')
+print(df_melt_tcell)
 
-sns.relplot(data=df_melt, x="cell_type", y="cell_distribution", hue="subject", kind="scatter", hue_order=subject_hue_order).savefig(f'{dest}/scatter.png')
+# plots
+r = sns.relplot(data=df_melt, x="cell_type", y="cell_distribution", hue="file", kind="scatter", hue_order=hue_order)
+for axes in r.axes.flat:
+    _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=90)
+r.savefig(f'{dest}/raw_scatter.png')
+
+g = sns.relplot(data=df_melt, x="cell_type", y="cell_distribution", hue="subject", kind="scatter", hue_order=subject_hue_order)
+for axes in g.axes.flat:
+    _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=90)
+g.savefig(f'{dest}/scatter.png')
+
+v = sns.relplot(data=tcell_sorted_data, x="T cell", y="T cell CD4", hue="subject", kind="scatter", hue_order=subject_hue_order)
+for axes in v.axes.flat:
+    _ = axes.set_xticklabels(axes.get_xticklabels(), rotation=90)
+v.savefig(f'{dest}/tcell_scatter.png')
 
 print("end of processing")
 
