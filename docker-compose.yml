@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  
+  cytof-visualization:
+    env_file:
+      - dev.env
+    image: cytof/visualization
+    volumes:
+      - ./data:/service/data
+    container_name: cytof-visualization
+    build:
+      context: .
+      dockerfile: ./Dockerfile
