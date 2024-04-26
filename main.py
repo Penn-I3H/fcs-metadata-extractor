@@ -7,7 +7,7 @@ import pandas as pd
 import seaborn as sns
 import pdfkit
 import datetime
-import tempfile
+import pytz
 
 def extractSubject(file):
     val = file.find('.')
@@ -56,19 +56,22 @@ print(df_melt_tcell)
 raw_scatter = relplot(df_melt, "cell_type", "cell_distribution", "file", "scatter", hue_order)
 rotateXaxis(raw_scatter, 90).savefig(f'{dest}/raw_scatter.png')
 
+scatter_location = f'{dest}/scatter.png'
 scatter = relplot(df_melt, "cell_type", "cell_distribution", "subject", "scatter", subject_hue_order)
-rotateXaxis(scatter, 90).savefig(f'{dest}/scatter.png')
+rotateXaxis(scatter, 90).savefig(scatter_location)
 
+t_cell_scatter_location = f'{dest}/tcell_scatter.png'
 tcell_scatter = relplot(data, "T cell", "T cell CD4", "subject", "scatter", subject_hue_order)
-rotateXaxis(tcell_scatter, 90).savefig(f'{dest}/tcell_scatter.png')
+rotateXaxis(tcell_scatter, 90).savefig(t_cell_scatter_location)
 
 raw_tcell_scatter = relplot(data, "T cell", "T cell CD4", "file", "scatter", hue_order)
 rotateXaxis(raw_tcell_scatter, 90).savefig(f'{dest}/raw_tcell_scatter.png')
 
 # create report - pdfkit
-# pdfkit.from_url('http://google.com', f'{dest}/ih-report2.pdf')
-header = f'/service/I3H_Logo_HiRes.jpg'
-generated = datetime.datetime.now()
+banner = "/service/I3H_Logo_HiRes.jpg"
+eastern = pytz.timezone('US/Eastern')
+dt = datetime.datetime.now(eastern)
+generated = dt.strftime('%Y-%m-%d %H:%M:%S %Z%z')
 body = """
     <html>
       <head>
@@ -76,18 +79,31 @@ body = """
         <meta name="pdfkit-orientation" content="Portrait"/>
       </head>
       <header>
-      <img src="{header}" width="500px">
+      <img src="{banner}" width="500px">
       </header>
+      <body>
       <hr style="width:100%;text-align:left;margin-left:0">
-      <div><i>Report Generation Date : {generated}<i></div>
+      <div><i>Report Generated : {generated}<i></div>
+      <br>
+      <table style="border-collapse: collapse;">
+        <tr>
+        <th></th>
+        <th></th>
+        </tr>
+        <tr>
+            <td><b>Cell populations plotted against their frequencies<b></td><td><img src="{scatter_location}"></td>
+        </tr>
+        <tr>
+            <td><b>T cell CD4 plotted against total T cells<b></td><td><img src="{t_cell_scatter_location}"></td>
+        </tr>
+      </table>
+      </body>
+      <br>
+      <footer><center>421 Curie Blvd. Philadelphia, PA 19104</center></footer>
       </html>
-    """.format(header=header, generated=generated)
+    """.format(banner=banner, generated=generated, scatter_location=scatter_location, t_cell_scatter_location=t_cell_scatter_location)
 
-with tempfile.NamedTemporaryFile(suffix='.html', delete=False) as temp:
-    temp.write(b'<!DOCTYPE html><html><body>421 Curie Blvd. Philadelphia, PA 19104</body></html>')
-    temp.seek(0)
-
-options = {"enable-local-file-access": "", 'footer-html': temp.name}
-pdfkit.from_string(body, f'{dest}/ih-report2.pdf', options=options)
+options = {"enable-local-file-access": ""}
+pdfkit.from_string(body, f'{dest}/ih-report.pdf', options=options)
 
 print("end of processing")
