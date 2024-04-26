@@ -4,6 +4,8 @@ WORKDIR /service
 
 RUN apt clean && apt-get update
 
+RUN apt-get -y install wkhtmltopdf
+
 COPY . .
 
 RUN ls /service

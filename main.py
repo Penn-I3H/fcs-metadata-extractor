@@ -5,6 +5,9 @@ import shutil
 import os
 import pandas as pd
 import seaborn as sns
+import pdfkit
+import datetime
+import tempfile
 
 def extractSubject(file):
     val = file.find('.')
@@ -62,5 +65,29 @@ rotateXaxis(tcell_scatter, 90).savefig(f'{dest}/tcell_scatter.png')
 raw_tcell_scatter = relplot(data, "T cell", "T cell CD4", "file", "scatter", hue_order)
 rotateXaxis(raw_tcell_scatter, 90).savefig(f'{dest}/raw_tcell_scatter.png')
 
-print("end of processing")
+# create report - pdfkit
+# pdfkit.from_url('http://google.com', f'{dest}/ih-report2.pdf')
+header = f'/service/I3H_Logo_HiRes.jpg'
+generated = datetime.datetime.now()
+body = """
+    <html>
+      <head>
+        <meta name="pdfkit-page-size" content="A4"/>
+        <meta name="pdfkit-orientation" content="Portrait"/>
+      </head>
+      <header>
+      <img src="{header}" width="500px">
+      </header>
+      <hr style="width:100%;text-align:left;margin-left:0">
+      <div><i>Report Generation Date : {generated}<i></div>
+      </html>
+    """.format(header=header, generated=generated)
 
+with tempfile.NamedTemporaryFile(suffix='.html', delete=False) as temp:
+    temp.write(b'<!DOCTYPE html><html><body>421 Curie Blvd. Philadelphia, PA 19104</body></html>')
+    temp.seek(0)
+
+options = {"enable-local-file-access": "", 'footer-html': temp.name}
+pdfkit.from_string(body, f'{dest}/ih-report2.pdf', options=options)
+
+print("end of processing")
