@@ -79,22 +79,38 @@ body = """
         <meta name="pdfkit-orientation" content="Portrait"/>
       </head>
       <header>
-      <img src="{banner}" width="500px">
+      <img src="{banner}" width="300px">
       </header>
       <body>
       <hr style="width:100%;text-align:left;margin-left:0">
       <div><i>Report Generated : {generated}<i></div>
       <br>
+      <p>
+      This report was generated from the "Automatic CyTOF Data workflow on the Pennsieve Platform. For more information about the results, please contact the Immune Health Data Core (Matei Ionita)."
+      </p>
+      
       <table style="border-collapse: collapse;">
         <tr>
         <th></th>
         <th></th>
         </tr>
         <tr>
-            <td><b>Cell populations plotted against their frequencies<b></td><td><img src="{scatter_location}"></td>
+            <td><b>1. Cell populations plotted against their frequencies<b></td>
         </tr>
         <tr>
-            <td><b>T cell CD4 plotted against total T cells<b></td><td><img src="{t_cell_scatter_location}"></td>
+        <td>Cell classification across across all included subjects. Only selected classifications are included in this graph.</td>
+        </tr>
+        <tr style='padding-bottom:50px'>
+        <td style='text-align:center; vertical-align:middle'><img width="450px" src="{scatter_location}"></td>
+        </tr>
+        <tr>
+            <td><b>2. T cell CD4 plotted against total T cells<b></td>
+        </tr>
+        <tr>
+        <td>Graphing CD4 T-cell populations against total T-Cell populations across all included subjects.</td>
+        </tr>
+        <tr style='padding-bottom:50px'>
+            <td style='text-align:center; vertical-align:middle'><img width="450px" src="{t_cell_scatter_location}"></td>
         </tr>
       </table>
       </body>
