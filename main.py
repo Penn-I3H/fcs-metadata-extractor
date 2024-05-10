@@ -30,12 +30,27 @@ src = os.environ['INPUT_DIR']
 dest = os.environ['OUTPUT_DIR']
 
 source_files = os.listdir(src)
+
 print("source files: ", source_files)
+
+if 'feat_major' in source_files and 'feat_adaptive' in source_files:
+    print('feat_major and feat_adaptive present in the list')
+    feat_major_files = os.listdir(f'{src}/feat_major')
+    feat_adaptive_files = os.listdir(f'{src}/feat_adaptive')
+
+    for filename in feat_major_files:
+        feat_major_df = pd.read_csv(f'{src}/feat_major/{filename}')
+        feat_adaptive_df = pd.read_csv(f'{src}/feat_adaptive/{filename}')
+
+        merged = feat_major_df.merge(feat_adaptive_df, on='file')
+        merged.to_csv(f'{src}/{filename}', index=False)
+
 dataframes = []
 for filename in source_files:
-    df = pd.read_csv(f'{src}/{filename}')
-    df['subject'] = extractSubject(df["file"].squeeze())
-    dataframes.append(df)
+    if "csv" in filename:
+        df = pd.read_csv(f'{src}/{filename}')
+        df['subject'] = extractSubject(df["file"].squeeze())
+        dataframes.append(df)
 data = pd.concat(dataframes, axis=0)
 
 sorted_data = data.sort_values("file")
