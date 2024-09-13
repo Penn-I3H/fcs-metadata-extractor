@@ -6,11 +6,17 @@ import seaborn as sns
 import pdfkit
 import datetime
 import pytz
+import subprocess
 
 print("start of processing")
 
 src = os.environ['INPUT_DIR']
 dest = os.environ['OUTPUT_DIR']
+
+try:
+    output = subprocess.run(["Rscript", "/service/R/main.R"]) 
+except subprocess.CalledProcessError as e:
+    print(f"command failed with return code {e.returncode}")
 
 # create report - pdfkit
 banner = "/service/I3H_Logo_HiRes.jpg"
