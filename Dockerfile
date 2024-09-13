@@ -26,6 +26,8 @@ RUN Rscript -e "install.packages('irlba', type = 'source')"
 RUN Rscript -e "install.packages(c('uwot', 'RColorBrewer', 'glmnet'), Ncpus = 10, dependencies=TRUE)"
 RUN Rscript -e "install.packages(c('Rcpp'), Ncpus = 10, dependencies=TRUE)"
 
+RUN Rscript -e "install.packages(c('plyr'), Ncpus = 10, dependencies=TRUE)"
+
 RUN mkdir -p data
 
 COPY . .

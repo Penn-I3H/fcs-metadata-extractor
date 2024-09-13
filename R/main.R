@@ -25,13 +25,9 @@ col <- "Visit"
 files_ada <- list.files(dir_in, pattern="feat_adaptive", recursive = TRUE)
 files_maj <- str_replace_all(files_ada, "adaptive", "major")
 
-# for (file in files_maj) {
-#   file.copy(paste0(dir_in,file), paste0(dir_in, "viz_input/"))
-# }
-
 df_feat_list <- Map(read_features, 
-                    paste0(dir_in, files_ada), 
-                    paste0(dir_in, files_maj)) 
+                    paste0(dir_in, "/", files_ada), 
+                    paste0(dir_in, "/", files_maj)) 
 
 df_feat <- df_feat_list %>%
   do.call(what=plyr::rbind.fill) %>%
@@ -69,7 +65,7 @@ ggsave(p, filename=paste0(dir_out, "/lasso.png"), width=12, height=4)
 
 files_stats <- list.files(dir_in, pattern="cleanup_stats")
 
-df_stats <- lapply(paste0(dir_in, files_stats), function(path) {
+df_stats <- lapply(paste0(dir_in, "/", files_stats), function(path) {
   read_csv(path, col_types = cols(), progress=FALSE)
 }) %>% do.call(what=rbind)
 
