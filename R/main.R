@@ -13,7 +13,7 @@ dir.create(paste0(dir_out, "/QC_controls"))
 
 
 ### read file containing metadata for cohort of interest
-path_to_meta <- paste0(dir_in,"metadata.csv")
+path_to_meta <- paste0(dir_in,"/metadata.csv")
 meta <- read_csv(path_to_meta, col_types=cols()) 
 
 ### select metadata column to highlight in plots 
