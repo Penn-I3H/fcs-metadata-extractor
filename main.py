@@ -6,10 +6,10 @@ import datetime
 import pytz
 import subprocess
 
-# try:
-#     output = subprocess.run(["Rscript", "/service/R/main.R"]) 
-# except subprocess.CalledProcessError as e:
-#     print(f"command failed with return code {e.returncode}")
+try:
+    output = subprocess.run(["Rscript", "/service/R/main.R"]) 
+except subprocess.CalledProcessError as e:
+    print(f"command failed with return code {e.returncode}")
 
 print("Generating report ...")
 
