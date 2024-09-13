@@ -3,11 +3,13 @@ source("R/utils.R")
 Rcpp::sourceCpp("R/js.cpp")
 
 ### input and output directories, modify as necessary
-dir_in <- "../../R/allcytof/AnalysisResultsAug2024/viz_input/"
-dir_out <- "figures/"
+args <- commandArgs(trailingOnly = TRUE)
 
-dir.create(paste0(dir_out, "QC_all"))
-dir.create(paste0(dir_out, "QC_controls"))
+dir_in <- Sys.getenv("INPUT_DIR")
+dir_out <- Sys.getenv("OUTPUT_DIR")
+
+dir.create(paste0(dir_out, "/QC_all"))
+dir.create(paste0(dir_out, "/QC_controls"))
 
 
 ### read file containing metadata for cohort of interest
