@@ -34,9 +34,7 @@ COPY . .
 
 # Add additional dependencies below ...
 RUN apt-get -y install python3-pip
-RUN pip3 --version
 RUN pip3 install -r /service/requirements.txt
-RUN python3.10 --version
 
 RUN ls /service
 
