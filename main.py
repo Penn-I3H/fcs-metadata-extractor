@@ -1,18 +1,19 @@
 import sys
 import shutil
-import os
+import os, os.path
 import pdfkit
 import datetime
 import pytz
 import subprocess
 
-try:
-    output = subprocess.run(["Rscript", "/service/R/main.R"]) 
-except subprocess.CalledProcessError as e:
-    print(f"command failed with return code {e.returncode}")
+# try:
+#     output = subprocess.run(["Rscript", "/service/R/main.R"]) 
+# except subprocess.CalledProcessError as e:
+#     print(f"command failed with return code {e.returncode}")
 
 print("Generating report ...")
 
+src = os.environ['INPUT_DIR']   
 dest = os.environ['OUTPUT_DIR']    
 
 # create report - pdfkit
@@ -39,6 +40,9 @@ qc_univariate_Neutrophil_controls = f'{dest}/QC_controls/qc_univariate_Neutrophi
 qc_univariate_T_CD4_controls = f'{dest}/QC_controls/qc_univariate_T cell CD4.png'
 qc_univariate_T_CD8_controls = f'{dest}/QC_controls/qc_univariate_T cell CD8.png'
 
+# count the files processed
+analysed_samples = len([name for name in os.listdir(src) if os.path.isfile(os.path.join(src, name)) and "cleanup_stats" in name])
+
 body = """
     <html>
       <head>
@@ -50,12 +54,13 @@ body = """
       </header>
       <body>
       <hr style="width:100%;text-align:left;margin-left:0">
-      <div><i>Report Generated : {generated}<i></div>
-      <br>
+         <div>
+      This report was generated using the "Automated CyTOF Data Anaysis workflow" on the Pennsieve Platform. For more information about the results, please contact the Immune Health Data Core (Matei Ionita). <i>Report Generated : {generated}<i>
+      </div>
       <p>
-      This report was generated using the "Automated CyTOF Data workflow" on the Pennsieve Platform. For more information about the results, please contact the Immune Health Data Core (Matei Ionita).
+      <u>{analysed_samples} samples</u> were analysed.
       </p>
-      
+   
       <table style="border-collapse: collapse;">
         <tr>
         <th></th>
@@ -136,7 +141,6 @@ body = """
         <td style='text-align:center; vertical-align:middle'><img width="900px" src="{lasso_location}"></td>
         </tr>
 
-
         <tr>
             <td><b>6. Umap<b></td>
         </tr>
@@ -152,7 +156,7 @@ body = """
       <br>
       <footer><center>421 Curie Blvd. Philadelphia, PA 19104</center></footer>
       </html>
-    """.format(banner=banner, generated=generated, boxplot_location=boxplot_location, cleanup_location=cleanup_location, lasso_location=lasso_location, umap_location=umap_location,
+    """.format(analysed_samples=analysed_samples, banner=banner, generated=generated, boxplot_location=boxplot_location, cleanup_location=cleanup_location, lasso_location=lasso_location, umap_location=umap_location,
                qc_summary_all=qc_summary_all, qc_univariate_B_all=qc_univariate_B_all, qc_univariate_Neutrophil_all=qc_univariate_Neutrophil_all, qc_univariate_T_CD4_all=qc_univariate_T_CD4_all, qc_univariate_T_CD8_all=qc_univariate_T_CD8_all,
                qc_summary_controls=qc_summary_controls, qc_univariate_B_controls=qc_univariate_B_controls, qc_univariate_Neutrophil_controls=qc_univariate_Neutrophil_controls, qc_univariate_T_CD4_controls=qc_univariate_T_CD4_controls, qc_univariate_T_CD8_controls=qc_univariate_T_CD8_controls)
 
