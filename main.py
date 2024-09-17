@@ -60,7 +60,7 @@ body = """
       For more information about the results, please contact the Immune Health Data Core (Matei Ionita).</i>
       </div>
       <p>
-       Samples were received and processed by the Immune Health (IH) processing unit. Data acquisition was then performed on IH's CyTOF XT instrument and resulted in <u>{analysed_samples} fcs files</u>. 
+       Samples were received and processed by the Immune Health (IH) processing unit. Data acquisition was then performed on IH's CyTOF XT instrument and resulted in <u>{analysed_samples} FCS files</u>. 
        The files were analysed on the Pennsieve platform in order to determine QC scores for each file and quantify the abundance of <u>40 immune cell types</u>.
       </p>
    
