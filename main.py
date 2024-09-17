@@ -6,10 +6,10 @@ import datetime
 import pytz
 import subprocess
 
-# try:
-#     output = subprocess.run(["Rscript", "/service/R/main.R"]) 
-# except subprocess.CalledProcessError as e:
-#     print(f"command failed with return code {e.returncode}")
+try:
+    output = subprocess.run(["Rscript", "/service/R/main.R"]) 
+except subprocess.CalledProcessError as e:
+    print(f"command failed with return code {e.returncode}")
 
 print("Generating report ...")
 
@@ -229,7 +229,7 @@ body = """
             <td><h2>5. The study samples in the context of historical IH data</h2></td>
         </tr>
         <tr>
-        <td>The same cell type proportions computed for the study samples were determined in [n_hist_samples] analyzed in the past by IH. Based on this, we constructed a map in which each dot is a sample, and samples with similar cell type proportions are represented by dots that are close to each other.</td>
+        <td>The same cell type proportions computed for the study samples were determined in samples analyzed in the past by IH. Based on this, we constructed a map in which each dot is a sample, and samples with similar cell type proportions are represented by dots that are close to each other.</td>
         </tr>
         <tr style='padding-bottom:50px'>
         <td>
