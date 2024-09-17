@@ -145,31 +145,30 @@ body = """
 
         <tr style='padding-bottom:50px'>
             <td style='text-align:center; vertical-align:middle'>
-            <img style="max-width: 75%; object-fit: contain;" src="{qc_univariate_B_controls}"></br></br>
+            <img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_B_controls}"></br></br>
             <div><u>Figure 8</u>: Estimates of the distribution of protein expression in B cells. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
         </tr>
         <tr style='padding-bottom:50px'>
             <td style='text-align:center; vertical-align:middle'>
-            <img style="max-width: 75%; object-fit: contain;" src="{qc_univariate_Neutrophil_controls}"></br></br>
+            <img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_Neutrophil_controls}"></br></br>
             <div><u>Figure 9</u>: Estimates of the distribution of protein expression in Neutrophils. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
         </tr>
         <tr style='padding-bottom:50px'>
             <td style='text-align:center; vertical-align:middle'>
-            <img style="max-width: 75%; object-fit: contain;" src="{qc_univariate_T_CD4_controls}">
+            <img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_T_CD4_controls}">
             </br></br>
             <div><u>Figure 10</u>: Estimates of the distribution of protein expression in CD4 T cells. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
         </tr>
         <tr style='padding-bottom:50px'>
             <td style='text-align:center; vertical-align:middle'>
-            <img style="max-width: 75%; object-fit: contain;" src="{qc_univariate_T_CD8_controls}">
+            <img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_T_CD8_controls}">
             </br></br>
             <div><u>Figure 11</u>: Estimates of the distribution of protein expression in CD8 T cells. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
         </tr>
-        <tr><td><div style="break-after:page"></div></td></tr>
 
         <tr>
             <td><h2>4. Cell type abundance across samples</h2></td>
