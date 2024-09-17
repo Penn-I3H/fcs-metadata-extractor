@@ -194,7 +194,7 @@ body = """
 
        <div style="break-after:page"></div>
 
-        <table style="border-collapse: collapse;">
+        <table style="border-collapse: separate; border-spacing: 0 15px;">
         <tr>
             <td><h2>4. Cell type abundance across samples</h2></td>
         </tr>
@@ -205,13 +205,17 @@ body = """
         <td style='vertical-align:middle'>
         <img width="900px" src="{boxplot_location}">
             <div><u>Figure 12</u>: Boxplots showing distribution of cell type proportions in all files, stratified by metadata provided by the investigators.</div>
-            </td>
+        </td>
         </tr>
-        <tr style="padding: 50px;"></tr>
+
+
+        <tr style="margin-bottom: 50px;"></tr>
+
         <tr>
         <td><p>Cell classification across across all included subjects. Only selected classifications are included in this graph.<p></td>
         </tr>
-        <tr style='padding-bottom:50px'>
+
+        <tr style="margin-bottom: 50px;">
         <td style='vertical-align:middle'>
         <img style="max-width: 60%; object-fit: contain;" src="{lasso_location}">
         </br></br>
