@@ -176,7 +176,7 @@ get_js <- function (hist) {
       pivot_wider(names_from = "file", values_from = "density") %>% 
       select(-expression) %>% 
       as.matrix()
-    js_mat <- I3HQC:::js_matrix(hist_ch)
+    js_mat <- js_matrix(hist_ch)
     colnames(js_mat) <- files
     js_df <- js_mat %>% as_tibble() %>% mutate(file1 = files) %>% 
       pivot_longer(-file1, names_to = "file2", values_to = "js_div") %>% 
