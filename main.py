@@ -64,7 +64,6 @@ body = """
        The files were analysed on the Pennsieve platform in order to determine QC scores for each file and quantify the abundance of <u>40 immune cell types</u>.
       </p>
    
-      
       <div style="break-after:page"></div>
 
       <table style="border-collapse: collapse;">
@@ -77,14 +76,16 @@ body = """
         </tr>
         
         <tr style='padding-bottom:50px'>
-            <td vertical-align:middle'>
+            <td>
             <img width="900px" src="{cleanup_location}"></br></br>
             <div><u>Figure 1</u>: Event counts at each stage in the cleanup process. Files with a high percentage of events removed during the cleanup process or those with very few viable events remaining, are highlighted.</div>
             </td>
         </tr>
+        </table>
 
-        <tr><td><div style="break-after:page"></div></td></tr>
+        <div style="break-after:page"></div>
 
+        <table style="border-collapse: collapse;">
         <tr>
             <td><h2>2. QC for all files</h2></td>
         </tr>
@@ -96,12 +97,16 @@ body = """
         <td><textarea name="comments" id="comments" cols="75" rows="10">Comments:</textarea></td>
         </tr>
         <tr style='padding-bottom:50px'>
-            <td style='vertical-align:middle'>
+            <td>
             <img  style="max-width: 25%; object-fit: contain;" src="{qc_summary_all}"></br></br>
             <div><u>Figure 2</u>: Heatmap showing QC statusus by major cell type in all files. Files with outlying protein expression distribution are shown in red, while those in which certain cell types were insufficiently abundant to estimate distributions are show in gray.</div>
             </td>
         </tr>
-        
+        </table>
+
+        <div style="break-after:page"></div>
+
+        <table style="border-collapse: collapse;">
         <tr style='padding-bottom:50px'>
             <td style='vertical-align:middle'>
             <img  style="max-width: 55%; object-fit: contain;" src="{qc_univariate_B_all}"></br></br>
@@ -114,6 +119,11 @@ body = """
             <div><u>Figure 4</u>: Estimates of the distribution of protein expression in Neutrophils. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
         </tr>
+        </table>
+
+        <div style="break-after:page"></div>
+
+        <table style="border-collapse: collapse;">
         <tr style='padding-bottom:50px'>
             <td vertical-align:middle'>
             <img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_T_CD4_all}"></br></br>
@@ -126,9 +136,11 @@ body = """
             <div><u>Figure 6</u>: Estimates of the distribution of protein expression in CD8 T cells. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
         </tr>
+        </table>
 
-        <tr><td><div style="break-after:page"></div></td></tr>
+        <div style="break-after:page"></div>
 
+        <table style="border-collapse: collapse;">
         <tr>
             <td><h2>3. QC for technical control files</h2></td>
         </tr>
@@ -142,7 +154,11 @@ body = """
             <div><u>Figure 7</u>: Heatmap showing QC status by major cell type in technical control  files. Files with outlying protein expression distribution are shown in red, while those in which certain cell types were insufficiently abundant to estimate distributions are show in gray.</div>
             </td>
         </tr>
+        </table>
 
+        <div style="break-after:page"></div>
+
+        <table style="border-collapse: collapse;">
         <tr style='padding-bottom:50px'>
             <td style='text-align:center; vertical-align:middle'>
             <img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_B_controls}"></br></br>
@@ -155,6 +171,11 @@ body = """
             <div><u>Figure 9</u>: Estimates of the distribution of protein expression in Neutrophils. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
         </tr>
+        </table>
+
+        <div style="break-after:page"></div>
+
+        <table style="border-collapse: collapse;">
         <tr style='padding-bottom:50px'>
             <td style='text-align:center; vertical-align:middle'>
             <img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_T_CD4_controls}">
@@ -169,7 +190,11 @@ body = """
             <div><u>Figure 11</u>: Estimates of the distribution of protein expression in CD8 T cells. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
         </tr>
+        </table>
 
+       <div style="break-after:page"></div>
+
+        <table style="border-collapse: collapse;">
         <tr>
             <td><h2>4. Cell type abundance across samples</h2></td>
         </tr>
@@ -177,25 +202,27 @@ body = """
         <td>After cleanup and quality control, we quantified major cell types in all samples.</td>
         </tr>
         <tr style='padding-bottom:50px'>
-        <td style='text-align:center; vertical-align:middle'>
+        <td style='vertical-align:middle'>
         <img width="900px" src="{boxplot_location}">
             <div><u>Figure 12</u>: Boxplots showing distribution of cell type proportions in all files, stratified by metadata provided by the investigators.</div>
             </td>
         </tr>
-
+        <tr style="padding: 50px;"></tr>
         <tr>
-        <td>Cell classification across across all included subjects. Only selected classifications are included in this graph.</td>
+        <td><p>Cell classification across across all included subjects. Only selected classifications are included in this graph.<p></td>
         </tr>
         <tr style='padding-bottom:50px'>
-        <td style=' vertical-align:middle'>
-        <img style="max-width: 50%; object-fit: contain;" src="{lasso_location}">
+        <td style='vertical-align:middle'>
+        <img style="max-width: 60%; object-fit: contain;" src="{lasso_location}">
         </br></br>
             <div><u>Figure 13</u>: Boxplots showing the probability that each file belongs to the specified clinical group, determined by our machine learning model. Cell types which are preferentially abundant in each of the groups are listed.</div>
             </td>
         </tr>
+        </table>
 
-        <tr><td><div style="break-after:page"></div></td></tr>
+        <div style="break-after:page"></div>
 
+        <table style="border-collapse: collapse;">
         <tr>
             <td><h2>5. The study samples in the context of historical IH data</h2></td>
         </tr>
@@ -209,19 +236,22 @@ body = """
             <div><u>Figure 14</u>: A map of immune profiles, highlighting the study samples and technical controls included in the present study, and color coded by the metadata provided by investigators.</div>
             </td>
         </tr>
+        </table>
+
+        <div style="break-after:page"></div>
+
+        <table style="border-collapse: collapse;">
         <tr>
-        <td><textarea name="comments" id="comments" cols="75" rows="10">Comments:</textarea></td>
+        <td><textarea name="comments" id="comments" cols="75" rows="50">Comments:</textarea></td>
         </tr>
               <tr>
         <td><textarea name="signature" id="signature" cols="75" rows="10">Signed:</textarea></td>
         </tr>
-        
-
-
       </table>
+
       </body>
       <br>
-      <footer><center>421 Curie Blvd. Philadelphia, PA 19104</center></footer>
+      <footer><center>I3H, 421 Curie Blvd. Philadelphia, PA 19104</center></footer>
       </html>
     """.format(analysed_samples=analysed_samples, banner=banner, generated=generated, boxplot_location=boxplot_location, cleanup_location=cleanup_location, lasso_location=lasso_location, umap_location=umap_location,
                qc_summary_all=qc_summary_all, qc_univariate_B_all=qc_univariate_B_all, qc_univariate_Neutrophil_all=qc_univariate_Neutrophil_all, qc_univariate_T_CD4_all=qc_univariate_T_CD4_all, qc_univariate_T_CD8_all=qc_univariate_T_CD8_all,
