@@ -244,10 +244,10 @@ body = """
 
         <table style="border-collapse: collapse;">
         <tr>
-        <td><textarea name="comments" id="comments" cols="75" rows="50">Comments:</textarea></td>
+        <td><textarea name="comments" id="comments" cols="100" rows="50">Comments:</textarea></td>
         </tr>
               <tr>
-        <td><textarea name="signature" id="signature" cols="75" rows="10">Signed:</textarea></td>
+        <td><textarea name="signature" id="signature" cols="100" rows="10">Signed:</textarea></td>
         </tr>
       </table>
 
