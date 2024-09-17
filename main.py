@@ -98,7 +98,7 @@ body = """
         </tr>
         <tr style='padding-bottom:50px'>
             <td>
-            <img  style="max-width: 25%; object-fit: contain;" src="{qc_summary_all}"></br></br>
+            <div style="text-align: center;"><img style="max-width: 25%; object-fit: contain;" src="{qc_summary_all}"></div></br></br>
             <div><u>Figure 2</u>: Heatmap showing QC statusus by major cell type in all files. Files with outlying protein expression distribution are shown in red, while those in which certain cell types were insufficiently abundant to estimate distributions are show in gray.</div>
             </td>
         </tr>
@@ -108,14 +108,13 @@ body = """
 
         <table style="border-collapse: collapse;">
         <tr style='padding-bottom:50px'>
-            <td style='vertical-align:middle'>
-            <img  style="max-width: 55%; object-fit: contain;" src="{qc_univariate_B_all}"></br></br>
+            <div style="text-align: center;"><img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_B_all}"></div></br></br>
             <div><u>Figure 3</u>: Estimates of the distribution of protein expression in B cells. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
         </tr>
         <tr style='padding-bottom:50px'>
-            <td vertical-align:middle'>
-            <img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_Neutrophil_all}"></br></br>
+            <td>
+            <div style="text-align: center;"><img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_Neutrophil_all}"></div></br></br>
             <div><u>Figure 4</u>: Estimates of the distribution of protein expression in Neutrophils. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
         </tr>
@@ -125,14 +124,14 @@ body = """
 
         <table style="border-collapse: collapse;">
         <tr style='padding-bottom:50px'>
-            <td vertical-align:middle'>
-            <img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_T_CD4_all}"></br></br>
+            <td>
+            <div style="text-align: center;"><img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_T_CD4_all}"></div></br></br>
             <div><u>Figure 5</u>: Estimates of the distribution of protein expression in CD4 T cells. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
         </tr>
         <tr style='padding-bottom:50px'>
-            <td vertical-align:middle'>
-            <img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_T_CD8_all}"></br></br>
+            <td>
+            <div style="text-align: center;"><img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_T_CD8_all}"></div></br></br>
             <div><u>Figure 6</u>: Estimates of the distribution of protein expression in CD8 T cells. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
         </tr>
@@ -148,8 +147,8 @@ body = """
         <td>Alongside the study samples, technical control replicates were run in each day of acquisition, to measure the consistency of the instrument across data acquisition batches. We measured the consistency of protein expression distribution across the replicates.</td>
         </tr>
         <tr style='padding-bottom:50px'>
-            <td style='text-align:center; vertical-align:middle'>
-            <img width="900px" src="{qc_summary_controls}">
+            <td>
+            <div style="text-align: center;"><img width="900px" src="{qc_summary_controls}"></div>
             </br></br>
             <div><u>Figure 7</u>: Heatmap showing QC status by major cell type in technical control  files. Files with outlying protein expression distribution are shown in red, while those in which certain cell types were insufficiently abundant to estimate distributions are show in gray.</div>
             </td>
@@ -160,14 +159,14 @@ body = """
 
         <table style="border-collapse: collapse;">
         <tr style='padding-bottom:50px'>
-            <td style='text-align:center; vertical-align:middle'>
-            <img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_B_controls}"></br></br>
+            <td>
+            <div style="text-align: center;"><img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_B_controls}"></div></br></br>
             <div><u>Figure 8</u>: Estimates of the distribution of protein expression in B cells. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
         </tr>
         <tr style='padding-bottom:50px'>
-            <td style='text-align:center; vertical-align:middle'>
-            <img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_Neutrophil_controls}"></br></br>
+            <td>
+            <div style="text-align: center;"><img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_Neutrophil_controls}"><div></br></br>
             <div><u>Figure 9</u>: Estimates of the distribution of protein expression in Neutrophils. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
         </tr>
@@ -177,15 +176,15 @@ body = """
 
         <table style="border-collapse: collapse;">
         <tr style='padding-bottom:50px'>
-            <td style='text-align:center; vertical-align:middle'>
-            <img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_T_CD4_controls}">
+            <td>
+            <div style="text-align: center;"><img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_T_CD4_controls}"></div>
             </br></br>
             <div><u>Figure 10</u>: Estimates of the distribution of protein expression in CD4 T cells. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
         </tr>
         <tr style='padding-bottom:50px'>
-            <td style='text-align:center; vertical-align:middle'>
-            <img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_T_CD8_controls}">
+            <td>
+            <div style="text-align: center;"><img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_T_CD8_controls}"></div>
             </br></br>
             <div><u>Figure 11</u>: Estimates of the distribution of protein expression in CD8 T cells. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
@@ -202,12 +201,11 @@ body = """
         <td>After cleanup and quality control, we quantified major cell types in all samples.</td>
         </tr>
         <tr style='padding-bottom:50px'>
-        <td style='vertical-align:middle'>
-        <img width="900px" src="{boxplot_location}">
+        <td>
+        <div style="text-align: center;"><img width="900px" src="{boxplot_location}"></div> </br></br>
             <div><u>Figure 12</u>: Boxplots showing distribution of cell type proportions in all files, stratified by metadata provided by the investigators.</div>
         </td>
         </tr>
-
 
         <tr style="margin-bottom: 50px;"></tr>
 
@@ -216,8 +214,8 @@ body = """
         </tr>
 
         <tr style="margin-bottom: 50px;">
-        <td style='vertical-align:middle'>
-        <img style="max-width: 60%; object-fit: contain;" src="{lasso_location}">
+        <td>
+        <div style="text-align: center;"><img style="max-width: 60%; object-fit: contain;" src="{lasso_location}"></div>
         </br></br>
             <div><u>Figure 13</u>: Boxplots showing the probability that each file belongs to the specified clinical group, determined by our machine learning model. Cell types which are preferentially abundant in each of the groups are listed.</div>
             </td>
@@ -234,7 +232,7 @@ body = """
         <td>The same cell type proportions computed for the study samples were determined in [n_hist_samples] analyzed in the past by IH. Based on this, we constructed a map in which each dot is a sample, and samples with similar cell type proportions are represented by dots that are close to each other.</td>
         </tr>
         <tr style='padding-bottom:50px'>
-        <td style='text-align:center; vertical-align:middle'>
+        <td>
         <img width="900px" src="{umap_location}">
                 </br></br>
             <div><u>Figure 14</u>: A map of immune profiles, highlighting the study samples and technical controls included in the present study, and color coded by the metadata provided by investigators.</div>
