@@ -56,7 +56,7 @@ body = """
       <hr style="width:100%;text-align:left;margin-left:0">
       <div> [ <i>Report Generated : {generated}</i> ]</div>
          <div>
-      <i>This report was generated using the Automated CyTOF Data Anaysis workflow on the <i>Pennsieve Platform</i>. <br>
+      <i>This report was generated using the Automated CyTOF Data Analysis workflow on the <i>Pennsieve Platform</i>. <br>
       For more information about the results, please contact the Immune Health Data Core (Matei Ionita).</i>
       </div>
       <p>
