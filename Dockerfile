@@ -33,6 +33,8 @@ RUN mkdir -p data
 COPY . .
 
 # Add additional dependencies below ...
+RUN apt install -y software-properties-common
+RUN add-apt-repository universe && apt-get update
 RUN apt-get -y install python3-pip
 RUN pip3 install -r /service/requirements.txt
 
