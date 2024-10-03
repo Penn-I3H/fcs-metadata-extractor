@@ -35,6 +35,26 @@ plot_umap_color_metadata <- function(df_feat_aug, col) {
 }
 
 
+plot_proportions_bar <- function(df_feat, feat_names, major=FALSE) {
+  df_tall <- df_feat %>%
+    mutate(File = str_remove(file, "MDIPA_")) %>%
+    pivot_longer(all_of(feat_names), names_to="feature", values_to="proportion")
+  
+  x_lab <- if_else(major, "% of total", "% of parent")
+  
+  ggplot(df_tall, aes(x=proportion, y=File, fill=File)) +
+    geom_col() +
+    scale_fill_viridis_d() +
+    facet_wrap(~feature, scales="free_x", ncol=5) +
+    xlab(x_lab) +
+    guides(fill="none", color="none") +
+    theme_bw(base_size=12) +
+    theme(axis.text = element_text(size=7),
+          axis.text.x = element_text(angle=45),
+          strip.background = element_rect(fill="white", color="white"),
+          strip.text = element_text(size=10))
+}
+
 plot_box <- function(df_feat_aug, feat_names, col) {
   df_tall <- df_feat_aug %>%
     filter(!is.na(.data[[col]])) %>%
