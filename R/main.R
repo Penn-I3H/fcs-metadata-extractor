@@ -70,7 +70,7 @@ p <- plot_proportions_bar(df_feat, feat_cd4)
 ggsave(p, filename=paste0(dir_out, "/proportions_bar_cd4.png"), width=12, height=12)
 
 feat_cd8_nk <- feat_names[grep("T cell CD8|NK cell ", feat_names)]
-p <- plot_proportions_bar(df_feat, feat_cd8)
+p <- plot_proportions_bar(df_feat, feat_cd8_nk)
 ggsave(p, filename=paste0(dir_out, "/proportions_bar_cd8.png"), width=12, height=8)
 
 feat_other <- feat_names[grep("B cell |Monocyte ", feat_names)]
