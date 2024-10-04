@@ -27,6 +27,12 @@ cleanup_location = f'{dest}/cleanup.png'
 lasso_location = f'{dest}/lasso.png'
 umap_location = f'{dest}/umap.png'
 
+proportions_bar_cd4 = f'{dest}/proportions_bar_cd4.png'
+proportions_bar_cd8 = f'{dest}/proportions_bar_cd8.png'
+proportions_bar_major = f'{dest}/proportions_bar_major.png'
+proportions_bar_other = f'{dest}/proportions_bar_other.png'
+
+
 # QC All
 qc_summary_all = f'{dest}/QC_all/qc_summary.png'
 qc_univariate_B_all = f'{dest}/QC_all/qc_univariate_B cell.png'
@@ -193,31 +199,20 @@ body = """
 
        <div style="break-after:page"></div>
 
-        <table style="border-collapse: separate; border-spacing: 0 15px;">
+        <table style="border-collapse: collapse;">
         <tr>
-            <td><h2>4. Cell type abundance across samples</h2></td>
-        </tr>
-        <tr>
-        <td>After cleanup and quality control, we quantified major cell types in all samples.</td>
+            <td><h2>4. Cell type porportions</h2></td>
         </tr>
         <tr style='padding-bottom:50px'>
-        <td>
-        <div style="text-align: center;"><img width="900px" src="{boxplot_location}"></div> </br></br>
-            <div><u>Figure 12</u>: Boxplots showing distribution of cell type proportions in all files, stratified by metadata provided by the investigators.</div>
-        </td>
+            <td>
+            <div><img style="max-width: 75%; object-fit: contain;" src="{proportions_bar_major}"></div></br></br>
+            <div><u>Figure 12</u>: Cell type proportions of major cell types by file.</div>
+            </td>
         </tr>
-
-        <tr style="margin-bottom: 50px;"></tr>
-
-        <tr>
-        <td><p>Cell classification across across all included subjects. Only selected classifications are included in this graph.<p></td>
-        </tr>
-
-        <tr style="margin-bottom: 50px;">
-        <td>
-        <div style="text-align: center;"><img style="max-width: 60%; object-fit: contain;" src="{lasso_location}"></div>
-        </br></br>
-            <div><u>Figure 13</u>: Boxplots showing the probability that each file belongs to the specified clinical group, determined by our machine learning model. Cell types which are preferentially abundant in each of the groups are listed.</div>
+        <tr style='padding-bottom:50px'>
+            <td>
+            <div ><img style="max-width: 75%; object-fit: contain;" src="{proportions_bar_cd4}"><div></br></br>
+            <div><u>Figure 13</u>: Cell type porportions of CD4 T cell subsets by file.</div>
             </td>
         </tr>
         </table>
@@ -225,22 +220,23 @@ body = """
         <div style="break-after:page"></div>
 
         <table style="border-collapse: collapse;">
-        <tr>
-            <td><h2>5. The study samples in the context of historical IH data</h2></td>
-        </tr>
-        <tr>
-        <td>The same cell type proportions computed for the study samples were determined in samples analyzed in the past by IH. Based on this, we constructed a map in which each dot is a sample, and samples with similar cell type proportions are represented by dots that are close to each other.</td>
+        <tr style='padding-bottom:50px'>
+            <td>
+            <div ><img style="max-width: 100%; object-fit: contain;" src="{proportions_bar_cd8}"></div>
+            </br></br>
+            <div><u>Figure 14</u>: Cell type proportions of CD8 T cell and NK cell subsets by file.</div>
+            </td>
         </tr>
         <tr style='padding-bottom:50px'>
-        <td>
-        <img width="900px" src="{umap_location}">
-                </br></br>
-            <div><u>Figure 14</u>: A map of immune profiles, highlighting the study samples and technical controls included in the present study, and color coded by the metadata provided by investigators.</div>
+            <td>
+            <div><img style="max-width: 100%; object-fit: contain;" src="{proportions_bar_other}"></div>
+            </br></br>
+            <div><u>Figure 15</u>: Cell type proportions of B cell and Monocyte subsets by file.</div>
             </td>
         </tr>
         </table>
 
-        <div style="break-after:page"></div>
+       <div style="break-after:page"></div>
 
         <table style="border-collapse: collapse;">
         <tr>
@@ -257,7 +253,8 @@ body = """
       </html>
     """.format(analysed_samples=analysed_samples, banner=banner, generated=generated, boxplot_location=boxplot_location, cleanup_location=cleanup_location, lasso_location=lasso_location, umap_location=umap_location,
                qc_summary_all=qc_summary_all, qc_univariate_B_all=qc_univariate_B_all, qc_univariate_Neutrophil_all=qc_univariate_Neutrophil_all, qc_univariate_T_CD4_all=qc_univariate_T_CD4_all, qc_univariate_T_CD8_all=qc_univariate_T_CD8_all,
-               qc_summary_controls=qc_summary_controls, qc_univariate_B_controls=qc_univariate_B_controls, qc_univariate_Neutrophil_controls=qc_univariate_Neutrophil_controls, qc_univariate_T_CD4_controls=qc_univariate_T_CD4_controls, qc_univariate_T_CD8_controls=qc_univariate_T_CD8_controls)
+               qc_summary_controls=qc_summary_controls, qc_univariate_B_controls=qc_univariate_B_controls, qc_univariate_Neutrophil_controls=qc_univariate_Neutrophil_controls, qc_univariate_T_CD4_controls=qc_univariate_T_CD4_controls, qc_univariate_T_CD8_controls=qc_univariate_T_CD8_controls,
+               proportions_bar_major=proportions_bar_major, proportions_bar_cd4=proportions_bar_cd4, proportions_bar_cd8=proportions_bar_cd8, proportions_bar_other=proportions_bar_other)
 
 options = {"enable-local-file-access": ""}
 pdfkit.from_string(body, f'{dest}/ih-report.pdf', options=options)
