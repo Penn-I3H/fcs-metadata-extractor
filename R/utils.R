@@ -214,8 +214,14 @@ run_cell_type_js <- function(ct, df_kde, dir_out, n_sd_cutoff=1.5, min_cutoff=0.
 
 
 get_js <- function (hist) {
-  channels <- unique(hist$channel)
   files <- unique(hist$file)
+  
+  channels <- hist %>% 
+    group_by(channel) %>%
+    summarise(n = length(unique(file))) %>%
+    filter(n == length(files)) %>%
+    pull(channel)
+  
   js_all <- lapply(channels, function(ch) {
     hist_ch <- hist %>% 
       filter(channel == ch) %>% 
@@ -228,6 +234,7 @@ get_js <- function (hist) {
     js_df <- js_mat %>% as_tibble() %>% mutate(file1 = files) %>% 
       pivot_longer(-file1, names_to = "file2", values_to = "js_div") %>% 
       mutate(channel = ch)
+    return(js_df)
   }) %>% do.call(what = rbind)
   return(js_all)
 }
@@ -266,6 +273,9 @@ average_js_score <- function (js, cutoff = NULL, n_sd_cutoff = 1.5,
 
 plot_univariate_all <- function(df, ct) {
 
+  if (ct == "all")
+    ct <- "all viable cells"
+  
   ggplot(df,
          aes(x=expression, y=density, group=file, color=QC_result)) +
     geom_path() +

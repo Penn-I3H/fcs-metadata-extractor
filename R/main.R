@@ -7,7 +7,7 @@ args <- commandArgs(trailingOnly = TRUE)
 
 dir_in <- Sys.getenv("INPUT_DIR")
 dir_out <- Sys.getenv("OUTPUT_DIR")
-dir_in <- "data/input/"
+dir_in <- "data/DORA_oct2024/"
 dir_out <- "figures/"
 
 dir.create(paste0(dir_out, "/QC_all"))
@@ -129,6 +129,12 @@ js_scores <- lapply(cell_types, run_cell_type_js,
   Reduce(f=full_join) 
 
 plot_js_across_cell_types(js_scores, dir_out=paste0(dir_out, "/QC_controls/"))
+
+
+## in all viable cells
+run_cell_type_js("all", df_kde=df_kde %>% filter(grepl("HD", file)), 
+                 dir_out=paste0(dir_out, "/QC_controls/"),
+                 n_sd_cutoff=1.5, min_cutoff=0.1)
 
 message("Done!")
 
