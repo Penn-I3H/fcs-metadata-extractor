@@ -7,8 +7,6 @@ args <- commandArgs(trailingOnly = TRUE)
 
 dir_in <- Sys.getenv("INPUT_DIR")
 dir_out <- Sys.getenv("OUTPUT_DIR")
-dir_in <- "data/DORA_oct2024/"
-dir_out <- "figures/"
 
 dir.create(paste0(dir_out, "/QC_all"))
 dir.create(paste0(dir_out, "/QC_controls"))
