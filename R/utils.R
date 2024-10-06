@@ -55,6 +55,32 @@ plot_proportions_bar <- function(df_feat, feat_names, major=FALSE) {
           strip.text = element_text(size=10))
 }
 
+
+plot_cv_bar <- function(df_feat, feat_names, lim = 0.25) {
+  df_cv <- df_feat %>%
+    select(all_of(c("file", feat_names))) %>%
+    filter(grepl("HD", file)) %>%
+    pivot_longer(all_of(feat_names), 
+                 names_to="Cell type", 
+                 values_to="Proportion") %>%
+    group_by(`Cell type`) %>%
+    summarise(m = mean(Proportion), s = sd(Proportion)) %>%
+    mutate(CV = s/m)
+  
+  M <- max(lim, max(df_cv$CV))
+  # m <- min(min(df_cv$m),1e-5)
+  my_breaks <- 10^seq(-5,0)
+  ggplot(df_cv, aes(x=`Cell type`, y=CV, fill=m)) +
+    geom_col() +
+    geom_hline(yintercept = 0.25, linetype="dashed") +
+    scale_fill_viridis_c(name="% of parent", option="inferno", trans="log",
+                         breaks=my_breaks, labels=my_breaks) +
+    coord_cartesian(ylim=c(0,M)) +
+    ylab("Coefficient of variation (CV = sd/mean)") +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle=90, vjust=0.5, hjust=1))
+}
+
 plot_box <- function(df_feat_aug, feat_names, col) {
   df_tall <- df_feat_aug %>%
     filter(!is.na(.data[[col]])) %>%
@@ -133,6 +159,7 @@ plot_cleanup_stats <- function(df_stats) {
   names(pal) <- c("OK", "Few viable events", "", "", "", "Many events lost to cleanup")
   ggplot(df_stats_tall, aes(x=Gate, y=Count, group=file, color=Status)) +
     geom_line() +
+    expand_limits(y=0) +
     geom_text(data=df_stats_tall %>% filter(Status!="OK" & Gate=="n_live_gate"), 
               aes(label=file), color="black", size=2.5) +
     scale_color_manual(values=pal) +

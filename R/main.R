@@ -7,6 +7,8 @@ args <- commandArgs(trailingOnly = TRUE)
 
 dir_in <- Sys.getenv("INPUT_DIR")
 dir_out <- Sys.getenv("OUTPUT_DIR")
+dir_in <- "data/input/"
+dir_out <- "figures/"
 
 dir.create(paste0(dir_out, "/QC_all"))
 dir.create(paste0(dir_out, "/QC_controls"))
@@ -76,6 +78,12 @@ ggsave(p, filename=paste0(dir_out, "/proportions_bar_cd8.png"), width=12, height
 feat_other <- feat_names[grep("B cell |Monocyte ", feat_names)]
 p <- plot_proportions_bar(df_feat, feat_other)
 ggsave(p, filename=paste0(dir_out, "/proportions_bar_other.png"), width=12, height=4)
+
+
+p <- plot_cv_bar(df_feat, feat_names)
+ggsave(p, filename=paste0(dir_out, "/cv_bar.png"), width=12, height=6)
+
+
 
 ### cleanup stats
 
