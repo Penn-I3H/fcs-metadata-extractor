@@ -35,19 +35,34 @@ plot_umap_color_metadata <- function(df_feat_aug, col) {
 }
 
 
-plot_proportions_bar <- function(df_feat, feat_names, major=FALSE) {
+plot_proportions_bar <- function(df_feat, feat_names, df_stats, major=FALSE) {
   df_tall <- df_feat %>%
-    mutate(File = str_remove(file, "MDIPA_")) %>%
-    pivot_longer(all_of(feat_names), names_to="feature", values_to="proportion")
+    inner_join(df_stats) %>%
+    mutate(File = file %>% str_remove("MDIPA_") %>% sapply(wrap_name)) %>%
+    pivot_longer(all_of(feat_names), names_to="feature", values_to="proportion") %>%
+    inner_join(df_feat %>% select(all_of(c("file", feat_names))))
+  
+  if (major) {
+    df_tall <- df_tall %>% mutate(Denominator = n_live_gate)
+  } else {
+    df_tall <- df_tall %>% mutate(Denominator = case_when(grepl("B cell ", feature) ~ `B cell`*n_live_gate,
+                                                          grepl("T cell CD4 ", feature) ~ `T cell CD4`*n_live_gate,
+                                                          grepl("T cell CD8 ", feature) ~ `T cell CD8`*n_live_gate,
+                                                          grepl("T cell", feature) ~ `T cell`*n_live_gate,
+                                                          grepl("NK cell ", feature) ~ `NK cell`*n_live_gate,
+                                                          grepl("Monocyte ", feature) ~ `Monocyte`*n_live_gate,
+                                                          TRUE ~ n_live_gate))
+  }
+
   
   x_lab <- if_else(major, "% of total", "% of parent")
   
-  ggplot(df_tall, aes(x=proportion, y=File, fill=File)) +
+  ggplot(df_tall, aes(x=proportion, y=File, fill=Denominator)) +
     geom_col() +
-    scale_fill_viridis_d() +
+    scale_fill_viridis_c(trans="log10", limits=c(1,max(df_stats$n_live_gate))) +
     facet_wrap(~feature, scales="free_x", ncol=5) +
     xlab(x_lab) +
-    guides(fill="none", color="none") +
+    # guides(fill="none", color="none") +
     theme_bw(base_size=12) +
     theme(axis.text = element_text(size=7),
           axis.text.x = element_text(angle=45),
@@ -310,6 +325,25 @@ pivot_js_scores <- function(js_scores) {
     mutate(cell_type = str_remove(cell_type, "QC_result_"))
 }
 
+wrap_name <- function(string, max_size=30, sep="_") {
+  pieces <- str_split(string, sep)[[1]]
+  total <- ""
+  size <- 0
+  for (piece in pieces) {
+    if (size + nchar(piece) >= max_size) {
+      total <- paste0(total, "_\n", piece)
+      size <- nchar(piece)
+    } else if (size==0) {
+      total <- piece
+      size <- nchar(piece)
+    } else{
+      total <- paste0(total, "_", piece)
+      size <- size + nchar(piece) + 1
+    }
+  }
+  
+  return(total)
+}
 
 plot_js_tile <- function(js_scores_long, batch="all") {
   switch (batch,
@@ -318,7 +352,8 @@ plot_js_tile <- function(js_scores_long, batch="all") {
           {title = paste("QC in batch", batch)}
   )
   
-  ggplot(js_scores_long, aes(x=cell_type, y=file, fill=QC_result)) +
+  ggplot(js_scores_long %>% mutate(file = sapply(js_scores_long$file, wrap_name)), 
+         aes(x=cell_type, y=file, fill=QC_result)) +
     geom_tile(color="black") +
     scale_fill_manual(values=c("Pass"="white", "Flagged"="red")) +
     theme_bw(base_size=16) +
