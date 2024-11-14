@@ -31,7 +31,7 @@ proportions_bar_cd4 = f'{dest}/proportions_bar_cd4.png'
 proportions_bar_cd8 = f'{dest}/proportions_bar_cd8.png'
 proportions_bar_major = f'{dest}/proportions_bar_major.png'
 proportions_bar_other = f'{dest}/proportions_bar_other.png'
-
+cv_bar = f'{dest}/cv_bar.png'
 
 # QC All
 qc_summary_all = f'{dest}/QC_all/qc_summary.png'
@@ -41,10 +41,7 @@ qc_univariate_T_CD4_all = f'{dest}/QC_all/qc_univariate_T cell CD4.png'
 qc_univariate_T_CD8_all = f'{dest}/QC_all/qc_univariate_T cell CD8.png'
 # QC Controls
 qc_summary_controls = f'{dest}/QC_controls/qc_summary.png'
-qc_univariate_B_controls = f'{dest}/QC_controls/qc_univariate_B cell.png'
-qc_univariate_Neutrophil_controls = f'{dest}/QC_controls/qc_univariate_Neutrophil.png'
-qc_univariate_T_CD4_controls = f'{dest}/QC_controls/qc_univariate_T cell CD4.png'
-qc_univariate_T_CD8_controls = f'{dest}/QC_controls/qc_univariate_T cell CD8.png'
+qc_univariate_all = f'{dest}/QC_controls/qc_univariate_all.png'
 
 # count the files processed
 analysed_samples = len([name for name in os.listdir(src) if os.path.isfile(os.path.join(src, name)) and "cleanup_stats" in name])
@@ -166,38 +163,13 @@ body = """
         <table style="border-collapse: collapse;">
         <tr style='padding-bottom:50px'>
             <td>
-            <div style="text-align: center;"><img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_B_controls}"></div></br></br>
-            <div><u>Figure 8</u>: Estimates of the distribution of protein expression in B cells. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
-            </td>
-        </tr>
-        <tr style='padding-bottom:50px'>
-            <td>
-            <div style="text-align: center;"><img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_Neutrophil_controls}"><div></br></br>
-            <div><u>Figure 9</u>: Estimates of the distribution of protein expression in Neutrophils. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
+            <div style="text-align: center;"><img style="max-width: 75%; object-fit: contain;" src="{qc_univariate_all}"></div></br></br>
+            <div><u>Figure 8</u>: Estimates of the distribution of protein expression in all viable events in technical control files. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
             </td>
         </tr>
         </table>
 
         <div style="break-after:page"></div>
-
-        <table style="border-collapse: collapse;">
-        <tr style='padding-bottom:50px'>
-            <td>
-            <div style="text-align: center;"><img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_T_CD4_controls}"></div>
-            </br></br>
-            <div><u>Figure 10</u>: Estimates of the distribution of protein expression in CD4 T cells. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
-            </td>
-        </tr>
-        <tr style='padding-bottom:50px'>
-            <td>
-            <div style="text-align: center;"><img style="max-width: 55%; object-fit: contain;" src="{qc_univariate_T_CD8_controls}"></div>
-            </br></br>
-            <div><u>Figure 11</u>: Estimates of the distribution of protein expression in CD8 T cells. Each curve represents the distribution of cells in one file, with files flagged for QC displayed in red.</div>
-            </td>
-        </tr>
-        </table>
-
-       <div style="break-after:page"></div>
 
         <table style="border-collapse: collapse;">
         <tr>
@@ -206,13 +178,13 @@ body = """
         <tr style='padding-bottom:50px'>
             <td>
             <div><img style="max-width: 75%; object-fit: contain;" src="{proportions_bar_major}"></div></br></br>
-            <div><u>Figure 12</u>: Cell type proportions of major cell types by file.</div>
+            <div><u>Figure 9</u>: Cell type proportions of major cell types by file.</div>
             </td>
         </tr>
         <tr style='padding-bottom:50px'>
             <td>
             <div ><img style="max-width: 75%; object-fit: contain;" src="{proportions_bar_cd4}"><div></br></br>
-            <div><u>Figure 13</u>: Cell type porportions of CD4 T cell subsets by file.</div>
+            <div><u>Figure 10</u>: Cell type porportions of CD4 T cell subsets by file.</div>
             </td>
         </tr>
         </table>
@@ -224,14 +196,26 @@ body = """
             <td>
             <div ><img style="max-width: 100%; object-fit: contain;" src="{proportions_bar_cd8}"></div>
             </br></br>
-            <div><u>Figure 14</u>: Cell type proportions of CD8 T cell and NK cell subsets by file.</div>
+            <div><u>Figure 11</u>: Cell type proportions of CD8 T cell and NK cell subsets by file.</div>
             </td>
         </tr>
         <tr style='padding-bottom:50px'>
             <td>
             <div><img style="max-width: 100%; object-fit: contain;" src="{proportions_bar_other}"></div>
             </br></br>
-            <div><u>Figure 15</u>: Cell type proportions of B cell and Monocyte subsets by file.</div>
+            <div><u>Figure 12</u>: Cell type proportions of B cell and Monocyte subsets by file.</div>
+            </td>
+        </tr>
+        </table>
+
+       <div style="break-after:page"></div>
+
+       <table style="border-collapse: collapse;">
+        <tr style='padding-bottom:50px'>
+            <td>
+            <div><img style="max-width: 100%; object-fit: contain;" src="{cv_bar}"></div>
+            </br></br>
+            <div><u>Figure 13</u>: Coefficients of variation (lower is better) for cell type proportions across technical replicates. Colors show mean abundance out of parent population.</div>
             </td>
         </tr>
         </table>
@@ -253,8 +237,8 @@ body = """
       </html>
     """.format(analysed_samples=analysed_samples, banner=banner, generated=generated, boxplot_location=boxplot_location, cleanup_location=cleanup_location, lasso_location=lasso_location, umap_location=umap_location,
                qc_summary_all=qc_summary_all, qc_univariate_B_all=qc_univariate_B_all, qc_univariate_Neutrophil_all=qc_univariate_Neutrophil_all, qc_univariate_T_CD4_all=qc_univariate_T_CD4_all, qc_univariate_T_CD8_all=qc_univariate_T_CD8_all,
-               qc_summary_controls=qc_summary_controls, qc_univariate_B_controls=qc_univariate_B_controls, qc_univariate_Neutrophil_controls=qc_univariate_Neutrophil_controls, qc_univariate_T_CD4_controls=qc_univariate_T_CD4_controls, qc_univariate_T_CD8_controls=qc_univariate_T_CD8_controls,
-               proportions_bar_major=proportions_bar_major, proportions_bar_cd4=proportions_bar_cd4, proportions_bar_cd8=proportions_bar_cd8, proportions_bar_other=proportions_bar_other)
+               qc_summary_controls=qc_summary_controls, qc_univariate_all=qc_univariate_all,
+               proportions_bar_major=proportions_bar_major, proportions_bar_cd4=proportions_bar_cd4, proportions_bar_cd8=proportions_bar_cd8, proportions_bar_other=proportions_bar_other, cv_bar=cv_bar)
 
 options = {"enable-local-file-access": ""}
 pdfkit.from_string(body, f'{dest}/ih-report.pdf', options=options)
