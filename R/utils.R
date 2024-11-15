@@ -54,15 +54,16 @@ plot_proportions_bar <- function(df_feat, feat_names, df_stats, major=FALSE) {
                                                           TRUE ~ n_live_gate))
   }
 
-  
+  df_tall <- df_tall %>% mutate(`Event count` = if_else(Denominator*proportion>50, "Above 50", "Under 50"))
   x_lab <- if_else(major, "% of total", "% of parent")
   
-  ggplot(df_tall, aes(x=proportion, y=File, fill=Denominator)) +
+  ggplot(df_tall, aes(x=proportion, y=File, fill=Denominator, color=`Event count`)) +
     geom_col() +
-    scale_fill_viridis_c(trans="log10", limits=c(1,max(df_stats$n_live_gate))) +
+    scale_fill_viridis_c(name="Parent count", trans="log10", limits=c(1,max(df_stats$n_live_gate))) +
     facet_wrap(~feature, scales="free_x", ncol=5) +
     xlab(x_lab) +
     # guides(fill="none", color="none") +
+    scale_color_manual(values=c("Above 50"="#2c7bb6", "Under 50"="#ed7014")) +
     theme_bw(base_size=12) +
     theme(axis.text = element_text(size=7),
           axis.text.x = element_text(angle=45),
