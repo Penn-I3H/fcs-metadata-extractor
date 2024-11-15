@@ -38,6 +38,20 @@ df_feat <- df_feat_list %>%
 feat_names <- names(df_feat %>% select(-file))
   
 
+
+### cleanup stats
+
+files_stats <- list.files(dir_in, pattern="cleanup_stats")
+
+df_stats <- lapply(paste0(dir_in, "/", files_stats), function(path) {
+  read_csv(path, col_types = cols(), progress=FALSE)
+}) %>% do.call(what=rbind)
+
+p <- plot_cleanup_stats(df_stats)
+ggsave(p, filename=paste0(dir_out, "/cleanup.png"), width=12, height=9)
+
+
+
 # ### build umap dimensional reduction
 # set.seed(0)
 # mat <- df_feat %>% select(where(is.numeric)) %>% as.matrix() %>% scale()
@@ -62,38 +76,24 @@ feat_names <- names(df_feat %>% select(-file))
 # for interim report only: file-wise bar charts
 # WARNING: scales poorly with number of samples, only use with up to 20
 feat_major <- feat_names[which(!grepl("T cell |NK cell |B cell |Monocyte ", feat_names))]
-p <- plot_proportions_bar(df_feat, feat_major, major=TRUE)
+p <- plot_proportions_bar(df_feat, feat_major, df_stats, major=TRUE)
 ggsave(p, filename=paste0(dir_out, "/proportions_bar_major.png"), width=12, height=8)
 
-feat_cd4 <- feat_names[grep("T cell CD4", feat_names)]
-p <- plot_proportions_bar(df_feat, feat_cd4)
+feat_cd4 <- feat_names[grep("T cell CD4|T cell DN|T cell gd", feat_names)]
+p <- plot_proportions_bar(df_feat, feat_cd4, df_stats)
 ggsave(p, filename=paste0(dir_out, "/proportions_bar_cd4.png"), width=12, height=12)
 
 feat_cd8_nk <- feat_names[grep("T cell CD8|NK cell ", feat_names)]
-p <- plot_proportions_bar(df_feat, feat_cd8_nk)
+p <- plot_proportions_bar(df_feat, feat_cd8_nk, df_stats)
 ggsave(p, filename=paste0(dir_out, "/proportions_bar_cd8.png"), width=12, height=8)
 
 feat_other <- feat_names[grep("B cell |Monocyte ", feat_names)]
-p <- plot_proportions_bar(df_feat, feat_other)
+p <- plot_proportions_bar(df_feat, feat_other, df_stats)
 ggsave(p, filename=paste0(dir_out, "/proportions_bar_other.png"), width=12, height=4)
 
 
 p <- plot_cv_bar(df_feat, feat_names)
 ggsave(p, filename=paste0(dir_out, "/cv_bar.png"), width=12, height=6)
-
-
-
-### cleanup stats
-
-files_stats <- list.files(dir_in, pattern="cleanup_stats")
-
-df_stats <- lapply(paste0(dir_in, "/", files_stats), function(path) {
-  read_csv(path, col_types = cols(), progress=FALSE)
-}) %>% do.call(what=rbind)
-
-p <- plot_cleanup_stats(df_stats)
-ggsave(p, filename=paste0(dir_out, "/cleanup.png"), width=12, height=9)
-
 
 
 
@@ -125,6 +125,7 @@ js_scores <- lapply(cell_types, run_cell_type_js,
                     dir_out=paste0(dir_out, "/QC_controls/"),
                     n_sd_cutoff=1.5, min_cutoff=0.1) %>%
   Reduce(f=full_join) 
+write_csv(js_scores, paste0(dir_out, "/js_scores.csv"))
 
 plot_js_across_cell_types(js_scores, dir_out=paste0(dir_out, "/QC_controls/"))
 
