@@ -114,6 +114,7 @@ js_scores <- lapply(cell_types, run_cell_type_js,
                     df_kde=df_kde, dir_out=paste0(dir_out, "/QC_all/"),
                     n_sd_cutoff=1.5, min_cutoff=0.1) %>%
   Reduce(f=full_join)
+write_csv(js_scores, paste0(dir_out, "/js_scores.csv"))
 
 plot_js_across_cell_types(js_scores, dir_out=paste0(dir_out, "/QC_all/"))
 
@@ -125,7 +126,6 @@ js_scores <- lapply(cell_types, run_cell_type_js,
                     dir_out=paste0(dir_out, "/QC_controls/"),
                     n_sd_cutoff=1.5, min_cutoff=0.1) %>%
   Reduce(f=full_join) 
-write_csv(js_scores, paste0(dir_out, "/js_scores.csv"))
 
 plot_js_across_cell_types(js_scores, dir_out=paste0(dir_out, "/QC_controls/"))
 
