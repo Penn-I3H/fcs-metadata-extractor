@@ -2,7 +2,7 @@ FROM rocker/r-ver:4.4.0
 
 WORKDIR /service
 
-RUN apt clean && apt-get update
+RUN apt clean && apt-get update && apt-get -y install alien
 
 # R program dependencies
 RUN apt-get install -y libudunits2-dev && apt-get install -y libgeos-dev && apt-get install -y libproj-dev && apt-get -y install libnlopt-dev && apt-get -y install pkg-config && apt-get -y install gdal-bin && apt-get install -y libgdal-dev
@@ -12,6 +12,10 @@ RUN apt-get -y install glpk-utils libglpk-dev glpk-doc
 RUN R --version
 
 ## Add additional program specific dependencies below ...
+# tidyverse and its prerequisites
+RUN Rscript -e "install.packages(c('BH'), Ncpus = 10, repos = 'https://cloud.r-project.org/', dependencies = TRUE)"
+RUN Rscript -e "install.packages(c('tidyverse'), Ncpus = 10, dependencies=TRUE)"
+RUN Rscript -e "library(tidyverse)" # sanity check
 
 # flowCore and its prerequisites
 RUN Rscript -e "install.packages(c('BiocManager'), Ncpus=10)"
