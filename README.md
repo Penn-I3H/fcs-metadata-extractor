@@ -1,4 +1,4 @@
-# cytof-visualization
+# FCS metadata extractor
 
 To run locally:
 
