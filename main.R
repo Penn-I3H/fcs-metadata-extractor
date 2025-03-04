@@ -1,4 +1,5 @@
 library(flowCore)
+library(stringr)
 
 dir_in <- Sys.getenv("INPUT_DIR")
 dir_out <- Sys.getenv("OUTPUT_DIR")
@@ -15,11 +16,22 @@ cols <- c("$BTIM", "$ETIM", "$DATE", "$TOT",
 
 df_list <- lapply(files, function(file) {
   path <- paste0(dir_in, "/", file)
-  header <- read.FCSheader(path)[[1]]
+  print("file")
+  print(file)
+  header <- read.FCSheader(path, emptyValue=FALSE)[[1]]
+  print("hello2")
   df <- as.data.frame(t(as.matrix(header[cols])))
   
   df["$TOT"] <- as.integer(df["$TOT"]) # remove trailing zeros
+  if ("Comment" %in% colnames(df))
+  {
+    df$Comment <- str_replace(df$Comment, "/", "_")
+  } else {
+    df[, 'Comment'] <- "NA"
+    df <- df[!is.na(names(df))]
+  }
   df$File <- file # add file name
+  print(df)
   
   return(df)
 })
