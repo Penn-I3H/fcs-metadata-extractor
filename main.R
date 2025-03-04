@@ -16,10 +16,7 @@ cols <- c("$BTIM", "$ETIM", "$DATE", "$TOT",
 
 df_list <- lapply(files, function(file) {
   path <- paste0(dir_in, "/", file)
-  print("file")
-  print(file)
   header <- read.FCSheader(path, emptyValue=FALSE)[[1]]
-  print("hello2")
   df <- as.data.frame(t(as.matrix(header[cols])))
   
   df["$TOT"] <- as.integer(df["$TOT"]) # remove trailing zeros
@@ -31,7 +28,6 @@ df_list <- lapply(files, function(file) {
     df <- df[!is.na(names(df))]
   }
   df$File <- file # add file name
-  print(df)
   
   return(df)
 })
