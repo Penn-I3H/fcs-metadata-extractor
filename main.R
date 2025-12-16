@@ -11,7 +11,7 @@ files <- list.files(dir_in, pattern=".fcs")
 file <- files[1]
 
 ### read headers and extract columns of interest
-cols <- c("$BTIM", "$ETIM", "$DATE", "$TOT",
+cols <- c("$BTIM", "$ETIM", "$DATE", "$TOT", "$CYT", '$CYTSN',
           "Comment", "TotalSampleVolume", "CellCount")
 
 df_list <- lapply(files, function(file) {
