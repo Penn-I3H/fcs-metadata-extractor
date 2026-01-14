@@ -1,5 +1,6 @@
 library(flowCore)
 library(stringr)
+library(plyr)
 
 dir_in <- Sys.getenv("INPUT_DIR")
 dir_out <- Sys.getenv("OUTPUT_DIR")
@@ -11,7 +12,7 @@ files <- list.files(dir_in, pattern=".fcs")
 file <- files[1]
 
 ### read headers and extract columns of interest
-cols <- c("$BTIM", "$ETIM", "$DATE", "$TOT", "$CYT", '$CYTSN',
+cols <- c("$BTIM", "$ETIM", "$DATE", "$TOT", "$CYT", '$CYTSN', '$CYTDATE',
           "Comment", "TotalSampleVolume", "CellCount")
 
 df_list <- lapply(files, function(file) {
@@ -32,5 +33,5 @@ df_list <- lapply(files, function(file) {
   return(df)
 })
 
-df_meta <- do.call(rbind, df_list)
+df_meta <- do.call(rbind.fill, df_list)
 write.csv(df_meta, file=paste0(dir_out, "/fcs_metadata.csv"), row.names = FALSE)
