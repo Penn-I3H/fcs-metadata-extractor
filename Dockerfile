@@ -16,6 +16,7 @@ RUN R --version
 RUN Rscript -e "install.packages(c('BH'), Ncpus = 10, repos = 'https://cloud.r-project.org/', dependencies = TRUE)"
 RUN Rscript -e "install.packages(c('tidyverse'), Ncpus = 10, dependencies=TRUE)"
 RUN Rscript -e "library(tidyverse)" # sanity check
+RUN Rscript -e "install.packages('plyr', repos='https://cloud.r-project.org')"
 
 # flowCore and its prerequisites
 RUN Rscript -e "install.packages(c('BiocManager'), Ncpus=10)"
