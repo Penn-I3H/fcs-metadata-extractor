@@ -2,10 +2,8 @@ library(flowCore)
 library(stringr)
 library(plyr)
 
-# dir_in <- Sys.getenv("INPUT_DIR")
-# dir_out <- Sys.getenv("OUTPUT_DIR")
-dir_in <- "./MS_Testing_Data/"
-dir_out <- "./"
+dir_in <- Sys.getenv("INPUT_DIR")
+dir_out <- Sys.getenv("OUTPUT_DIR")
 
 # dir_in <- "~/Documents/git/R/allcytof/data/balanced/"
 
