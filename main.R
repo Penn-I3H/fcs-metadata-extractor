@@ -12,7 +12,7 @@ files <- list.files(dir_in, pattern=".fcs")
 file <- files[1]
 
 ### read headers and extract columns of interest
-cols <- c("$BTIM", "$ETIM", "$DATE", "$TOT", "$CYT", '$CYTSN', '$CYTDATE',
+cols <- c("$BTIM", "$ETIM", "$DATE", "$TOT", "$CYT", '$CYTSN', '$CYTSN/$DATE',
           "Comment", "TotalSampleVolume", "CellCount")
 
 df_list <- lapply(files, function(file) {
@@ -35,4 +35,4 @@ df_list <- lapply(files, function(file) {
 })
 
 df_meta <- do.call(rbind.fill, df_list)
-write.csv(df_meta, file=paste0(dir_out, "/fcs_metadata.csv")) #, row.names = FALSE)
+write.csv(df_meta, file=paste0(dir_out, "/fcs_metadata.csv"), row.names=FALSE) #, row.names = FALSE)
